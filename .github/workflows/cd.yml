@@ -17,5 +17,6 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
+        passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
         script: |
           ls -la
