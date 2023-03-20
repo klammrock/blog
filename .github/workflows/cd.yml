@@ -1,0 +1,21 @@
+name: Deploy
+# run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+# on:
+#   push:
+#     branches: [ master ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+#    - uses: actions/checkout@v1
+    - name: Deploy using ssh
+      uses: appleboy/ssh-action@master
+      # uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.REMOTE_PORT }}
+        script: |
+          ls -la
