@@ -20,3 +20,4 @@ jobs:
         passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
         script: |
           ls -la
+          echo "Hello from GitHub Actions!!!" > /tmp/blank_site/index.html
