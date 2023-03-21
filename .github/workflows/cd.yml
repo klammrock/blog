@@ -19,5 +19,6 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
         script: |
-          ls -la
-          echo "Hello from GitHub Actions!!!" > /tmp/blank_site/index.html
+          sudo docker pull klammrock/frontend
+          sudo docker run -p 80:80 -d --name frontend klammrock/frontend
+          sudo docker update --restart=always frontend
