@@ -20,5 +20,7 @@ jobs:
         passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
         script: |
           sudo docker pull klammrock/frontend:dr
+          sudo docker stop frontend
+          sudo docker rm frontend
           sudo docker run -p 80:80 -d --name frontend klammrock/frontend:dr
           sudo docker update --restart=always frontend
