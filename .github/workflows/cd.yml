@@ -28,21 +28,18 @@ jobs:
 
       - name: Run install
         uses: borales/actions-yarn@v4
-        working-directory: ./frontend
         with:
-          cmd: install
+          cmd: --cwd frontend install
 
       - name: Build production bundle
         uses: borales/actions-yarn@v4
-        working-directory: ./frontend
         with:
-          cmd: build
+          cmd: --cwd frontend build
 
       - name: Test the app
         uses: borales/actions-yarn@v4
-        working-directory: ./frontend
         with:
-          cmd: test
+          cmd: --cwd frontend test
 
       # TODO: https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching
       # - name: Cache Docker layers
@@ -64,8 +61,8 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v4
-        working-directory: ./frontend
         with:
+          context: ./frontend
           push: true
           tags: klammrock/frontend:latest
 
