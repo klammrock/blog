@@ -28,16 +28,19 @@ jobs:
 
       - name: Run install
         uses: borales/actions-yarn@v4
+        working-directory: ./frontend
         with:
           cmd: install
 
       - name: Build production bundle
         uses: borales/actions-yarn@v4
+        working-directory: ./frontend
         with:
           cmd: build
 
       - name: Test the app
         uses: borales/actions-yarn@v4
+        working-directory: ./frontend
         with:
           cmd: test
 
@@ -61,6 +64,7 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v4
+        working-directory: ./frontend
         with:
           push: true
           tags: klammrock/frontend:latest
