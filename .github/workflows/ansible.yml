@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - ansible
+      - ansible/**
 jobs:
   ansible:
     runs-on: ubuntu-latest
