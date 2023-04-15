@@ -2,7 +2,7 @@ name: ansible
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - ansible
 jobs:
