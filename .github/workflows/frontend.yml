@@ -1,9 +1,11 @@
-name: Deploy
+name: frontend
 # run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
-# on:
-#   push:
-#     branches: [ master ]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - frontend
 jobs:
   frontend:
     runs-on: ubuntu-latest

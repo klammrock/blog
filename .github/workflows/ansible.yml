@@ -1,0 +1,14 @@
+name: ansible
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ansible
+jobs:
+  ansible:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: |
+          echo "Ansible ci/cd"
