@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - frontend_wb/**
+env:
+  PUBLIC_URL: /wb
 jobs:
   frontend_wb:
     runs-on: ubuntu-latest
@@ -37,8 +39,6 @@ jobs:
         uses: borales/actions-yarn@v4
         with:
           cmd: --cwd frontend_wb PUBLIC_URL=/wb build
-        env:
-          PUBLIC_URL: /wb
 
       - name: Test the app
         uses: borales/actions-yarn@v4
