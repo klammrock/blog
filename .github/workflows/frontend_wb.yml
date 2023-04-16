@@ -1,0 +1,85 @@
+name: frontend_wb
+# run-name: ${{ github.actor }} is learning GitHub Actions
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - frontend_wb/**
+jobs:
+  frontend_wb:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend_wb
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      # TODO: https://stackoverflow.com/questions/65412663/github-actions-stuck-on-yarn-build-step-for-react-app-continous-integration
+      # - name: Cache Dependencies
+      #   uses: actions/cache@v3
+      #     with:
+      #       path: '**/node_modules'
+      #       key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: --cwd frontend_wb install
+
+      - name: Build production bundle
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: --cwd frontend_wb build
+
+      - name: Test the app
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: --cwd frontend_wb test
+
+      # TODO: https://evilmartians.com/chronicles/build-images-on-github-actions-with-docker-layer-caching
+      # - name: Cache Docker layers
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /tmp/.buildx-cache
+      #     key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-buildx-
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend_wb
+          push: true
+          tags: klammrock/frontend_wb:latest
+
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
+          script: |
+            sudo docker network inspect klammrock >/dev/null 2>&1 || sudo docker network create --attachable klammrock
+            sudo docker pull klammrock/frontend_wb
+            sudo docker stop frontend_wb
+            sudo docker rm frontend_wb
+            sudo docker run -p 8080:80 -d --name frontend_wb --network="klammrock" klammrock/frontend_wb
+            sudo docker update --restart=always frontend_wb
