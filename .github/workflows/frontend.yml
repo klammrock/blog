@@ -77,6 +77,7 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           script: |
+            sudo docker network inspect klammrock >/dev/null 2>&1 || sudo docker network create --attachable klammrock
             sudo docker pull klammrock/frontend
             sudo docker stop frontend
             sudo docker rm frontend
