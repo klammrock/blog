@@ -36,7 +36,7 @@ jobs:
       - name: Build production bundle
         uses: borales/actions-yarn@v4
         with:
-          cmd: --cwd frontend_wb build
+          cmd: --cwd frontend_wb PUBLIC_URL=/wb build
 
       - name: Test the app
         uses: borales/actions-yarn@v4
