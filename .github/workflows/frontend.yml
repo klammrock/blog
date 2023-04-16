@@ -80,5 +80,5 @@ jobs:
             sudo docker pull klammrock/frontend
             sudo docker stop frontend
             sudo docker rm frontend
-            sudo docker run -p 80:80 -d --name frontend klammrock/frontend
+            sudo docker run -p 80:80 -d --name frontend --network="klammrock" klammrock/frontend
             sudo docker update --restart=always frontend
