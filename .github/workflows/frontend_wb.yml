@@ -6,8 +6,6 @@ on:
       - main
     paths:
       - frontend_wb/**
-env:
-  PUBLIC_URL: /wb
 jobs:
   frontend_wb:
     runs-on: ubuntu-latest
