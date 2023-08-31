@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        To be done... 
+        To be done soon
       </div>
     </div>
   );
