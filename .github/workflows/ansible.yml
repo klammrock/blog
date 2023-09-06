@@ -25,7 +25,7 @@ jobs:
             sudo docker network inspect klammrock >/dev/null 2>&1 || sudo docker network create --attachable klammrock
             sudo docker pull postgres:15.4-alpine3.18
 
-            docker volume create postgres-data-volume
+            sudo docker volume create postgres-data-volume
             export POSTGRES_PASSWORD=postgres
             export POSTGRES_USER=postgres
             export POSTGRES_DB=blogdb
