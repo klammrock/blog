@@ -29,5 +29,5 @@ jobs:
             export POSTGRES_PASSWORD=postgres
             export POSTGRES_USER=postgres
             export POSTGRES_DB=blogdb
-            sudo docker run -p 5432:5432/tcp -d --name postgresql --network="klammrock" -v postgres-data-volume:/var/lib/postgresql/data postgresql
-            sudo docker update --restart=always postgres:15.4-alpine3.18
+            sudo docker run -p 5432:5432/tcp -d --name postgresql --network="klammrock" -v postgres-data-volume:/var/lib/postgresql/data postgresql:15.4-alpine3.18
+            sudo docker update --restart=always postgres
