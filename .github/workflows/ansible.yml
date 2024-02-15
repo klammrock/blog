@@ -13,21 +13,21 @@ jobs:
         run: |
           echo "Ansible ci/cd"
 
-      - name: Deploy PostgreSQL using ssh
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.REMOTE_PORT }}
-          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
-          script: |
-            sudo docker network inspect klammrock >/dev/null 2>&1 || sudo docker network create --attachable klammrock
-            sudo docker pull postgres:15.4-alpine3.18
+      # - name: Deploy PostgreSQL using ssh
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.REMOTE_HOST }}
+      #     username: ${{ secrets.REMOTE_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.REMOTE_PORT }}
+      #     passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
+      #     script: |
+      #       sudo docker network inspect klammrock >/dev/null 2>&1 || sudo docker network create --attachable klammrock
+      #       sudo docker pull postgres:15.4-alpine3.18
 
-            sudo docker volume create postgresql-data-volume
-            export POSTGRES_PASSWORD=postgres
-            export POSTGRES_USER=postgres
-            export POSTGRES_DB=blogdb
-            sudo docker run -p 5432:5432/tcp -d --name postgresql -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_DB=$POSTGRES_DB --network="klammrock" -v postgresql-data-volume:/var/lib/postgresql/data postgres:15.4-alpine3.18
-            sudo docker update --restart=always postgresql
+      #       sudo docker volume create postgresql-data-volume
+      #       export POSTGRES_PASSWORD=postgres
+      #       export POSTGRES_USER=postgres
+      #       export POSTGRES_DB=blogdb
+      #       sudo docker run -p 5432:5432/tcp -d --name postgresql -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_DB=$POSTGRES_DB --network="klammrock" -v postgresql-data-volume:/var/lib/postgresql/data postgres:15.4-alpine3.18
+      #       sudo docker update --restart=always postgresql
