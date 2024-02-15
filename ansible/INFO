@@ -1,0 +1,1 @@
+ansible-playbook -vvv playbooks/add_blog_app.yml --limit 'klammrock.ru'

@@ -1,0 +1,3 @@
+---
+product_name: "blog"
+postgres_docker_img_tag: 15.6-alpine3.19

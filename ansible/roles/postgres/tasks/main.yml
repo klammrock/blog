@@ -1,0 +1,51 @@
+- name: update packages cache (Debian)
+  apt:
+    update_cache: yes
+  tags:
+    - docker-install
+
+- name: install Docker-CE and deps 
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - docker-ce
+    - python3-pip
+  tags:
+    - docker-install
+
+- name: install docker python libs
+  pip:
+    executable: pip3
+    state: latest
+    name: 
+      - "docker==6.1.3"
+      - "docker-compose"
+  tags:
+    - docker-install
+
+- name: ensure that compose dir exists
+  file: 
+    path: "/tmp/{{ product_name }}-{{ environment_tag }}/" 
+    state: directory
+  tags:
+    - infr-ct
+    - app-ct
+
+- name: copy compose files
+  template:
+    src: docker-compose.yml.j2
+    dest: "/tmp/{{ product_name }}-{{ environment_tag }}/docker-compose.yml"
+  tags:
+    - infr-ct
+    - app-ct
+
+- name: deploy postgres container
+  docker_compose:
+    recreate: smart
+    project_name: "{{ product_name }}-{{ environment_tag }}"
+    project_src: "/tmp/{{ product_name }}-{{ environment_tag }}"
+    services: "{{ item }}"
+  with_items: "{{ infr_ct_list }}"
+  tags:
+    - infr-ct

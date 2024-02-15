@@ -1,0 +1,13 @@
+---
+- name: deploy blog-app
+  hosts: vps
+
+  roles:
+    - blog_app
+    - postgres
+  environment:
+    # infr-ct vars
+    INFR_POSTGRES_CT_TAG: "{{ postgres_docker_img_tag }}"
+    # app-ct vars
+    # monitoring ct vars
+    # app vars

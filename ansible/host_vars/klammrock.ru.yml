@@ -1,0 +1,4 @@
+environment_tag: prod
+
+infr_ct_list:
+  - postgres

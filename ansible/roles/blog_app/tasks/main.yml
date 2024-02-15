@@ -1,0 +1,10 @@
+- name: create 1
+  copy:
+    content: 1
+    dest: /tmp/1
+
+- name: copy 1
+  copy:
+    src: /tmp/1
+    dest: /tmp/2
+    remote_src: yes
