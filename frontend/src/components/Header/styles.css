@@ -1,7 +1,7 @@
 .header {
-  height: 75px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  background-color: #ccc;
+  font-size: 18px;
+  color: white;
+  background-color: #777;
 }

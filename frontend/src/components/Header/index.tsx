@@ -1,12 +1,15 @@
 import React from 'react';
 
+import Logo from './Logo'
+import Menu from './Menu'
+
 import './styles.css';
 
 function Header() {
   return (
     <div className='header'>
-      <div>Logo</div>
-      <div>Main Menu</div>
+      <Logo />
+      <Menu />
     </div>
   );
 }
